@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101820" />
+    <meta
+      name="description"
+      content="Voiceful is a private, browser-based text-to-speech studio with free WAV downloads."
+    />
+    <title>Voiceful — private text to speech</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23d8ff68'/%3E%3Cpath d='M18 28h8l10-9v26l-10-9h-8zM42 25c2 2 3 4 3 7s-1 5-3 7M47 20c4 3 6 7 6 12s-2 9-6 12' fill='none' stroke='%23101820' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+    <script type="importmap">
+      {
+        "imports": {
+          "onnxruntime-web/wasm": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/esm/ort.wasm.min.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Voiceful home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>voiceful</span>
+        </a>
+        <div class="topbar-note"><span class="privacy-dot"></span>Private by default</div>
+      </header>
+
+      <main class="studio" aria-labelledby="page-title">
+        <section class="intro">
+          <div class="eyebrow"><span class="eyebrow-line"></span>LOCAL VOICE STUDIO</div>
+          <h1 id="page-title">Give your words<br /><em>a clear voice.</em></h1>
+          <p class="intro-copy">Turn a script into polished speech, right in your browser. Free to use, with unlimited WAV downloads.</p>
+        </section>
+
+        <section class="workspace" aria-label="Text to speech studio">
+          <div class="composer-panel panel">
+            <div class="panel-heading">
+              <div>
+                <p class="panel-kicker">01 / YOUR SCRIPT</p>
+                <h2>Write or paste your text</h2>
+              </div>
+              <button class="ghost-button" id="clearButton" type="button">Clear</button>
+            </div>
+            <label class="sr-only" for="scriptInput">Text to convert to speech</label>
+            <textarea id="scriptInput" spellcheck="true">Thank you for your time today. I’m looking forward to showing you what we can accomplish together.</textarea>
+            <div class="composer-footer">
+              <span id="characterCount">0 characters</span>
+              <span class="no-limit"><span class="mini-check">✓</span> No character limit</span>
+            </div>
+          </div>
+
+          <div class="controls-panel panel">
+            <div class="panel-heading compact">
+              <div>
+                <p class="panel-kicker">02 / DELIVERY</p>
+                <h2>Choose a voice</h2>
+              </div>
+              <div class="model-meta">
+                <span class="model-tag">PIPER · ENGLISH LOCAL AI</span>
+                <span class="selection-status" id="selectionStatus">Selected: Amy · female</span>
+              </div>
+            </div>
+
+            <p class="engine-note">English uses local Piper voices with unlimited WAV export. Paragraph breaks are preserved.</p>
+
+            <div class="voice-library">
+              <div class="voice-library-heading">
+                <span class="delivery-label">All available English Piper models</span>
+                <span class="voice-library-count" id="voiceCount">24 models</span>
+              </div>
+              <div class="model-list" id="voiceList" role="listbox" aria-label="All available English Piper models"></div>
+              <p class="voice-library-note">High-quality and multi-speaker models may take longer to download the first time. Each model is cached locally.</p>
+              <div class="model-download-row">
+                <button class="secondary-button" id="downloadAllButton" type="button">Download all models</button>
+                <span class="voice-library-count" id="downloadStatus">Checking cache…</span>
+              </div>
+              <div class="model-download-progress" id="modelDownloadProgress" hidden>
+                <div class="progress-header"><span id="downloadProgressLabel">Preparing model downloads…</span><span id="downloadProgressPercent">0%</span></div>
+                <div class="progress-track"><span id="downloadProgressBar"></span></div>
+              </div>
+            </div>
+
+            <div class="style-row">
+              <div class="delivery-copy">
+                <span class="delivery-label">Delivery style</span>
+                <span class="delivery-value" id="styleValue">Professional</span>
+              </div>
+              <div class="style-grid" role="radiogroup" aria-label="Delivery style">
+                <button class="style-option selected" type="button" data-style="professional" role="radio" aria-checked="true">Professional</button>
+                <button class="style-option" type="button" data-style="warm" role="radio" aria-checked="false">Warm</button>
+                <button class="style-option" type="button" data-style="calm" role="radio" aria-checked="false">Calm</button>
+                <button class="style-option" type="button" data-style="energetic" role="radio" aria-checked="false">Energetic</button>
+                <button class="style-option" type="button" data-style="serious" role="radio" aria-checked="false">Serious</button>
+              </div>
+              <p class="style-note" id="styleNote">Balanced pace and neutral loudness for formal voiceovers. Exported WAVs apply pace and loudness; preview also shapes pitch.</p>
+            </div>
+
+            <div class="delivery-row">
+              <div class="delivery-copy">
+                <span class="delivery-label">Playback speed</span>
+                <span class="delivery-value" id="speedValue">1.0×</span>
+              </div>
+              <input id="speedInput" type="range" min="0.75" max="1.25" step="0.05" value="1" aria-label="Playback speed" />
+            </div>
+
+            <div class="action-row">
+              <button class="preview-button" id="previewButton" type="button"><span class="play-icon">▶</span> Preview</button>
+              <button class="primary-button" id="generateButton" type="button"><span>Generate audio</span><span class="button-arrow">↗</span></button>
+            </div>
+            <p class="helper-text" id="helperText">Your text stays in this tab. Nothing is uploaded or saved.</p>
+          </div>
+        </section>
+
+        <section class="result-panel panel" id="resultPanel" aria-live="polite">
+          <div class="result-topline">
+            <div>
+              <p class="panel-kicker">03 / YOUR AUDIO</p>
+              <h2 id="resultTitle">Ready when you are</h2>
+            </div>
+            <span class="result-status" id="resultStatus"><span class="status-dot"></span>Not generated</span>
+          </div>
+          <div class="result-empty" id="resultEmpty">
+            <div class="wave-placeholder" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <p>Generate a WAV to preview it here and download it as many times as you like.</p>
+          </div>
+          <div class="result-ready" id="resultReady" hidden>
+            <audio id="audioPlayer" controls preload="metadata"></audio>
+            <div class="result-actions">
+              <span id="audioMeta">WAV · browser generated</span>
+              <a class="download-button" id="downloadButton" href="#" download="voiceful-audio.wav"><span>Download WAV</span><span>↓</span></a>
+            </div>
+          </div>
+          <div class="progress-state" id="progressState" hidden>
+            <div class="progress-header"><span id="progressLabel">Preparing your voice…</span><span id="progressPercent">0%</span></div>
+            <div class="progress-track"><span id="progressBar"></span></div>
+            <p id="progressDetail">The first voice load can take a moment. It will be cached by your browser for faster repeats.</p>
+          </div>
+        </section>
+
+        <footer class="studio-footer">
+          <span>Built for quick, private voiceovers.</span>
+          <span class="footer-divider"></span>
+          <span>Runs on your device · No account needed</span>
+        </footer>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

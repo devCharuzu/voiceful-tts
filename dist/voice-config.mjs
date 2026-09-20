@@ -1,0 +1,31 @@
+const catalog = [
+  ['en_US-amy-low', 'Amy', 'female', 'low', 1, 'Warm · clear', 63104526, 4164],
+  ['en_US-amy-medium', 'Amy', 'female', 'medium', 1, 'Warm · clear', 63201294, 4882],
+  ['en_US-arctic-medium', 'Arctic', 'multi', 'medium', 18, 'Multi-speaker · varied', 76766385, 5148],
+  ['en_US-bryce-medium', 'Bryce', 'male', 'medium', 1, 'Steady · natural', 63531379, 4966],
+  ['en_US-danny-low', 'Danny', 'male', 'low', 1, 'Direct · natural', 63104526, 4166],
+  ['en_US-hfc_female-medium', 'HFC Female', 'female', 'medium', 1, 'Clear · composed', 63201294, 5033],
+  ['en_US-hfc_male-medium', 'HFC Male', 'male', 'medium', 1, 'Steady · warm', 63201294, 5033],
+  ['en_US-joe-medium', 'Joe', 'male', 'medium', 1, 'Confident · clear', 63201294, 4794],
+  ['en_US-john-medium', 'John', 'male', 'medium', 1, 'Formal · measured', 63531379, 4965],
+  ['en_US-kathleen-low', 'Kathleen', 'female', 'low', 1, 'Calm · polished', 63104526, 4169],
+  ['en_US-kristin-medium', 'Kristin', 'female', 'medium', 1, 'Professional · bright', 63531379, 4968],
+  ['en_US-kusal-medium', 'Kusal', 'male', 'medium', 1, 'Warm · natural', 63201294, 4884],
+  ['en_US-l2arctic-medium', 'L2 Arctic', 'multi', 'medium', 24, 'Multi-speaker · varied', 76778673, 5252],
+  ['en_US-lessac-high', 'Lessac', 'neutral', 'high', 1, 'Natural · expressive', 113895201, 4883],
+  ['en_US-lessac-low', 'Lessac', 'neutral', 'low', 1, 'Natural · expressive', 63201294, 4882],
+  ['en_US-lessac-medium', 'Lessac', 'neutral', 'medium', 1, 'Natural · expressive', 63201294, 4885],
+  ['en_US-libritts-high', 'LibriTTS', 'multi', 'high', 904, 'Multi-speaker · varied', 136673811, 20163],
+  ['en_US-libritts_r-medium', 'LibriTTS R', 'multi', 'medium', 904, 'Multi-speaker · varied', 78580914, 20123],
+  ['en_US-ljspeech-high', 'LJ Speech', 'female', 'high', 1, 'Clear · even', 114199011, 4970],
+  ['en_US-ljspeech-medium', 'LJ Speech', 'female', 'medium', 1, 'Clear · even', 63531379, 4972],
+  ['en_US-norman-medium', 'Norman', 'male', 'medium', 1, 'Low · steady', 63531379, 4968],
+  ['en_US-ryan-high', 'Ryan', 'male', 'high', 1, 'Deep · steady', 120786792, 4166],
+  ['en_US-ryan-low', 'Ryan', 'male', 'low', 1, 'Deep · steady', 63104526, 4165],
+  ['en_US-ryan-medium', 'Ryan', 'male', 'medium', 1, 'Deep · steady', 63201294, 4883],
+];
+
+export const voices = Object.freeze(Object.fromEntries(catalog.map(([id, name, kind, quality, speakers, tone, modelBytes, configBytes]) => [
+  id,
+  { id, name, kind, quality, speakers, tone, modelBytes, configBytes },
+])));

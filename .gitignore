@@ -1,0 +1,14 @@
+# Local scratch files and deployment artifacts
+work/
+outputs/
+.openai/
+
+# Operating-system and editor files
+.DS_Store
+.vscode/
+
+# Node and Python local files
+node_modules/
+__pycache__/
+*.pyc
+*.tar.gz
