@@ -32,6 +32,17 @@ You need:
 
 You do not need to install a database, an AI API, or an npm package.
 
+## Get the project
+
+If Git is installed, open Terminal or Command Prompt and run:
+
+```bash
+git clone https://github.com/devCharuzu/voiceful-tts.git
+cd voiceful-tts
+```
+
+If you do not have Git, open the [Voiceful GitHub page](https://github.com/devCharuzu/voiceful-tts), click the green **Code** button, choose **Download ZIP**, and unzip the downloaded file. Then open Terminal or Command Prompt inside the unzipped `voiceful-tts` folder.
+
 ## Easiest way to run it
 
 ### macOS or Linux
